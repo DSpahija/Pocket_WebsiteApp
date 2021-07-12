@@ -1,5 +1,5 @@
 # Pocket_WebsiteApp
-Pocket project as a website application.
+Pocket project as a website application. Still in progress...
 
 Screenshots:
 

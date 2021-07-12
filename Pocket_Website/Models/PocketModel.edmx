@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Pocket_DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="IDExpenses" />
+          </Key>
+          <Property Name="IDExpenses" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDUser" Type="int" Nullable="false" />
+          <Property Name="ExpensesCategory" Type="int" Nullable="false" />
+          <Property Name="ExpensesType" Type="int" Nullable="false" />
+          <Property Name="TotalExpenses" Type="float" Nullable="false" />
+          <Property Name="ExpensesDate" Type="datetime" />
+          <Property Name="PaymentMethod" Type="varchar" MaxLength="20" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="200" />
+          <Property Name="InsertedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateCounter" Type="int" />
+          <Property Name="Payed" Type="bit" />
+        </EntityType>
+        <EntityType Name="ExpensesCategory">
+          <Key>
+            <PropertyRef Name="IDExpensesCategory" />
+          </Key>
+          <Property Name="IDExpensesCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeCategory" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="InsertedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateCounter" Type="int" />
+        </EntityType>
+        <EntityType Name="ExpensesType">
+          <Key>
+            <PropertyRef Name="IDExpensesType" />
+          </Key>
+          <Property Name="IDExpensesType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDUser" Type="int" Nullable="false" />
+          <Property Name="TypeCategory" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="InsertedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateCounter" Type="int" />
+        </EntityType>
+        <EntityType Name="Income">
+          <Key>
+            <PropertyRef Name="IDIncome" />
+          </Key>
+          <Property Name="IDIncome" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDUser" Type="int" Nullable="false" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="TotalIncome" Type="float" Nullable="false" />
+          <Property Name="SalaryDate" Type="datetime" Nullable="false" />
+          <Property Name="InsertedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateCounter" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="320" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="isEmailVerified" Type="bit" Nullable="false" />
+          <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="InsertedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertedDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateCounter" Type="int" />
+        </EntityType>
+        <Association Name="FK__Expenses__Expens__46E78A0C">
+          <End Role="ExpensesCategory" Type="Self.ExpensesCategory" Multiplicity="1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesCategory">
+              <PropertyRef Name="IDExpensesCategory" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="ExpensesCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expenses__Expens__47DBAE45">
+          <End Role="ExpensesType" Type="Self.ExpensesType" Multiplicity="1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesType">
+              <PropertyRef Name="IDExpensesType" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="ExpensesType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expenses__IDUser__6383C8BA">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__IDUse__628FA481">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ExpensesType" Type="Self.ExpensesType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="ExpensesType">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__TypeC__3E52440B">
+          <End Role="ExpensesCategory" Type="Self.ExpensesCategory" Multiplicity="1" />
+          <End Role="ExpensesType" Type="Self.ExpensesType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesCategory">
+              <PropertyRef Name="IDExpensesCategory" />
+            </Principal>
+            <Dependent Role="ExpensesType">
+              <PropertyRef Name="TypeCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Income__IDUser__619B8048">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Income" Type="Self.Income" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="Income">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Pocket_DatabaseModelStoreContainer">
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExpensesCategory" EntityType="Self.ExpensesCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExpensesType" EntityType="Self.ExpensesType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Income" EntityType="Self.Income" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Expenses__Expens__46E78A0C" Association="Self.FK__Expenses__Expens__46E78A0C">
+            <End Role="ExpensesCategory" EntitySet="ExpensesCategory" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expenses__Expens__47DBAE45" Association="Self.FK__Expenses__Expens__47DBAE45">
+            <End Role="ExpensesType" EntitySet="ExpensesType" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expenses__IDUser__6383C8BA" Association="Self.FK__Expenses__IDUser__6383C8BA">
+            <End Role="User" EntitySet="User" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__IDUse__628FA481" Association="Self.FK__ExpensesT__IDUse__628FA481">
+            <End Role="User" EntitySet="User" />
+            <End Role="ExpensesType" EntitySet="ExpensesType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__TypeC__3E52440B" Association="Self.FK__ExpensesT__TypeC__3E52440B">
+            <End Role="ExpensesCategory" EntitySet="ExpensesCategory" />
+            <End Role="ExpensesType" EntitySet="ExpensesType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Income__IDUser__619B8048" Association="Self.FK__Income__IDUser__619B8048">
+            <End Role="User" EntitySet="User" />
+            <End Role="Income" EntitySet="Income" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Pocket_DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Expens">
+          <Key>
+            <PropertyRef Name="IDExpenses" />
+          </Key>
+          <Property Name="IDExpenses" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDUser" Type="Int32" Nullable="false" />
+          <Property Name="ExpensesCategory" Type="Int32" Nullable="false" />
+          <Property Name="ExpensesType" Type="Int32" Nullable="false" />
+          <Property Name="TotalExpenses" Type="Double" Nullable="false" />
+          <Property Name="ExpensesDate" Type="DateTime" Precision="3" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateCounter" Type="Int32" />
+          <Property Name="Payed" Type="Boolean" />
+          <NavigationProperty Name="ExpensesCategory1" Relationship="Self.FK__Expenses__Expens__46E78A0C" FromRole="Expenses" ToRole="ExpensesCategory" />
+          <NavigationProperty Name="ExpensesType1" Relationship="Self.FK__Expenses__Expens__47DBAE45" FromRole="Expenses" ToRole="ExpensesType" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Expenses__IDUser__6383C8BA" FromRole="Expenses" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ExpensesCategory">
+          <Key>
+            <PropertyRef Name="IDExpensesCategory" />
+          </Key>
+          <Property Name="IDExpensesCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeCategory" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateCounter" Type="Int32" />
+          <NavigationProperty Name="Expenses" Relationship="Self.FK__Expenses__Expens__46E78A0C" FromRole="ExpensesCategory" ToRole="Expenses" />
+          <NavigationProperty Name="ExpensesTypes" Relationship="Self.FK__ExpensesT__TypeC__3E52440B" FromRole="ExpensesCategory" ToRole="ExpensesType" />
+        </EntityType>
+        <EntityType Name="ExpensesType">
+          <Key>
+            <PropertyRef Name="IDExpensesType" />
+          </Key>
+          <Property Name="IDExpensesType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDUser" Type="Int32" Nullable="false" />
+          <Property Name="TypeCategory" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateCounter" Type="Int32" />
+          <NavigationProperty Name="Expenses" Relationship="Self.FK__Expenses__Expens__47DBAE45" FromRole="ExpensesType" ToRole="Expenses" />
+          <NavigationProperty Name="ExpensesCategory" Relationship="Self.FK__ExpensesT__TypeC__3E52440B" FromRole="ExpensesType" ToRole="ExpensesCategory" />
+          <NavigationProperty Name="User" Relationship="Self.FK__ExpensesT__IDUse__628FA481" FromRole="ExpensesType" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Income">
+          <Key>
+            <PropertyRef Name="IDIncome" />
+          </Key>
+          <Property Name="IDIncome" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDUser" Type="Int32" Nullable="false" />
+          <Property Name="PersonName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalIncome" Type="Double" Nullable="false" />
+          <Property Name="SalaryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="InsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateCounter" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Income__IDUser__619B8048" FromRole="Income" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IDUser" />
+          </Key>
+          <Property Name="IDUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isEmailVerified" Type="Boolean" Nullable="false" />
+          <Property Name="ActivationCode" Type="Guid" Nullable="false" />
+          <Property Name="InsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateCounter" Type="Int32" />
+          <NavigationProperty Name="Expenses" Relationship="Self.FK__Expenses__IDUser__6383C8BA" FromRole="User" ToRole="Expenses" />
+          <NavigationProperty Name="ExpensesTypes" Relationship="Self.FK__ExpensesT__IDUse__628FA481" FromRole="User" ToRole="ExpensesType" />
+          <NavigationProperty Name="Incomes" Relationship="Self.FK__Income__IDUser__619B8048" FromRole="User" ToRole="Income" />
+        </EntityType>
+        <Association Name="FK__Expenses__Expens__46E78A0C">
+          <End Role="ExpensesCategory" Type="Self.ExpensesCategory" Multiplicity="1" />
+          <End Role="Expenses" Type="Self.Expens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesCategory">
+              <PropertyRef Name="IDExpensesCategory" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="ExpensesCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expenses__Expens__47DBAE45">
+          <End Role="ExpensesType" Type="Self.ExpensesType" Multiplicity="1" />
+          <End Role="Expenses" Type="Self.Expens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesType">
+              <PropertyRef Name="IDExpensesType" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="ExpensesType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expenses__IDUser__6383C8BA">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Expenses" Type="Self.Expens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__TypeC__3E52440B">
+          <End Role="ExpensesCategory" Type="Self.ExpensesCategory" Multiplicity="1" />
+          <End Role="ExpensesType" Type="Self.ExpensesType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpensesCategory">
+              <PropertyRef Name="IDExpensesCategory" />
+            </Principal>
+            <Dependent Role="ExpensesType">
+              <PropertyRef Name="TypeCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExpensesT__IDUse__628FA481">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ExpensesType" Type="Self.ExpensesType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="ExpensesType">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Income__IDUser__619B8048">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Income" Type="Self.Income" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IDUser" />
+            </Principal>
+            <Dependent Role="Income">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Pocket_DatabaseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Expenses" EntityType="Self.Expens" />
+          <EntitySet Name="ExpensesCategories" EntityType="Self.ExpensesCategory" />
+          <EntitySet Name="ExpensesTypes" EntityType="Self.ExpensesType" />
+          <EntitySet Name="Incomes" EntityType="Self.Income" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Expenses__Expens__46E78A0C" Association="Self.FK__Expenses__Expens__46E78A0C">
+            <End Role="ExpensesCategory" EntitySet="ExpensesCategories" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expenses__Expens__47DBAE45" Association="Self.FK__Expenses__Expens__47DBAE45">
+            <End Role="ExpensesType" EntitySet="ExpensesTypes" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expenses__IDUser__6383C8BA" Association="Self.FK__Expenses__IDUser__6383C8BA">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__TypeC__3E52440B" Association="Self.FK__ExpensesT__TypeC__3E52440B">
+            <End Role="ExpensesCategory" EntitySet="ExpensesCategories" />
+            <End Role="ExpensesType" EntitySet="ExpensesTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExpensesT__IDUse__628FA481" Association="Self.FK__ExpensesT__IDUse__628FA481">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ExpensesType" EntitySet="ExpensesTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Income__IDUser__619B8048" Association="Self.FK__Income__IDUser__619B8048">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Income" EntitySet="Incomes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Pocket_DatabaseModelStoreContainer" CdmEntityContainer="Pocket_DatabaseEntities1">
+          <EntitySetMapping Name="Expenses">
+            <EntityTypeMapping TypeName="Pocket_DatabaseModel.Expens">
+              <MappingFragment StoreEntitySet="Expenses">
+                <ScalarProperty Name="IDExpenses" ColumnName="IDExpenses" />
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="ExpensesCategory" ColumnName="ExpensesCategory" />
+                <ScalarProperty Name="ExpensesType" ColumnName="ExpensesType" />
+                <ScalarProperty Name="TotalExpenses" ColumnName="TotalExpenses" />
+                <ScalarProperty Name="ExpensesDate" ColumnName="ExpensesDate" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedDate" ColumnName="InsertedDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="UpdateCounter" ColumnName="UpdateCounter" />
+                <ScalarProperty Name="Payed" ColumnName="Payed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpensesCategories">
+            <EntityTypeMapping TypeName="Pocket_DatabaseModel.ExpensesCategory">
+              <MappingFragment StoreEntitySet="ExpensesCategory">
+                <ScalarProperty Name="IDExpensesCategory" ColumnName="IDExpensesCategory" />
+                <ScalarProperty Name="TypeCategory" ColumnName="TypeCategory" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedDate" ColumnName="InsertedDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="UpdateCounter" ColumnName="UpdateCounter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpensesTypes">
+            <EntityTypeMapping TypeName="Pocket_DatabaseModel.ExpensesType">
+              <MappingFragment StoreEntitySet="ExpensesType">
+                <ScalarProperty Name="IDExpensesType" ColumnName="IDExpensesType" />
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="TypeCategory" ColumnName="TypeCategory" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedDate" ColumnName="InsertedDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="UpdateCounter" ColumnName="UpdateCounter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Incomes">
+            <EntityTypeMapping TypeName="Pocket_DatabaseModel.Income">
+              <MappingFragment StoreEntitySet="Income">
+                <ScalarProperty Name="IDIncome" ColumnName="IDIncome" />
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="TotalIncome" ColumnName="TotalIncome" />
+                <ScalarProperty Name="SalaryDate" ColumnName="SalaryDate" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedDate" ColumnName="InsertedDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="UpdateCounter" ColumnName="UpdateCounter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Pocket_DatabaseModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="isEmailVerified" ColumnName="isEmailVerified" />
+                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="InsertedDate" ColumnName="InsertedDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="UpdateCounter" ColumnName="UpdateCounter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

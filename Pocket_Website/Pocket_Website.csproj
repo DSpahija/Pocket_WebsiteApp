@@ -45,10 +45,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -126,13 +137,81 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserHomeController.cs" />
+    <Compile Include="Encrypt\Encrypt.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Language\lang_al.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lang_al.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Language\lang_en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lang_en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Language\Multilanguage.cs" />
+    <Compile Include="Models\Expens.cs">
+      <DependentUpon>PocketModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ExpensesCategory.cs">
+      <DependentUpon>PocketModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ExpensesType.cs">
+      <DependentUpon>PocketModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Extended\Expenses.cs" />
+    <Compile Include="Models\Extended\ExpensesCategory.cs" />
+    <Compile Include="Models\Extended\ExpensesType.cs" />
+    <Compile Include="Models\Extended\Income.cs" />
+    <Compile Include="Models\Extended\User.cs" />
+    <Compile Include="Models\Income.cs">
+      <DependentUpon>PocketModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Methods\ExpensesData.cs" />
+    <Compile Include="Models\Methods\Get.cs" />
+    <Compile Include="Models\Methods\Helper.cs" />
+    <Compile Include="Models\Methods\WebGridExtensions.cs" />
+    <Compile Include="Models\PocketModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PocketModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PocketModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PocketModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PocketModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PocketModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>PocketModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Pocket_Database.mdf" />
+    <Content Include="App_Data\Pocket_Database_log.ldf">
+      <DependentUpon>Pocket_Database.mdf</DependentUpon>
+    </Content>
+    <Content Include="Assets\facebookwhite.png" />
+    <Content Include="Assets\First.gif" />
+    <Content Include="Assets\insta.png" />
+    <Content Include="Assets\instagramwhite.png" />
+    <Content Include="Assets\linkedinwhite.png" />
+    <Content Include="Assets\facebook.png" />
+    <Content Include="Assets\linkedin.png" />
+    <Content Include="Assets\PocketLogo.png" />
+    <Content Include="Assets\Second.gif" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -141,9 +220,28 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\PocketModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PocketModel.edmx</DependentUpon>
+      <LastGenOutput>PocketModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\PocketModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PocketModel.edmx</DependentUpon>
+      <LastGenOutput>PocketModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\PocketModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PocketModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\PocketModel.edmx.diagram">
+      <DependentUpon>PocketModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Chart\exporting.js" />
+    <Content Include="Scripts\Chart\highcharts.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -168,10 +266,26 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\User\Registration.cshtml" />
+    <Content Include="Views\User\VerifyAccount.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\UserHome\Index.cshtml" />
+    <Content Include="Views\UserHome\Expenses.cshtml" />
+    <Content Include="Views\Home\LoadingPage.cshtml" />
+    <Content Include="Views\UserHome\Incomes.cshtml" />
+    <Content Include="Views\UserHome\EditExpense.cshtml" />
+    <Content Include="Views\UserHome\EditIncome.cshtml" />
+    <Content Include="Views\UserHome\AddExpense.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <EmbeddedResource Include="Language\lang_al.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>lang_al.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Language\lang_en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>lang_en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -185,6 +299,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

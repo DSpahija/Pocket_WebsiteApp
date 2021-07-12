@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+<h2 style="text-align:center; margin-top:20px; color:silver">
+    Welcome, @ViewBag.FullName.
+</h2>
+<div>
+    <div id="container"
+         style="min-width: 310px; height: 400px; max-width: 600px; margin:60px auto"></div>
+
+    <div class="row">
+        <h3 class="col-md-4">Total Income:</h3>
+        <h3 class="col-md-4">Loans:</h3>
+        <h3 class="col-md-4">Budget:</h3>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $.getJSON("/UserHome/GetChartData", function (data) {
+            Highcharts.chart('container', {
+                colors: ['#148c8c', '#a7c173', '#a80d00', '#0082a2',
+                    '#3a5a3b', '#f08d2c', '#e34234', '#C0C0C0'],
+                chart: {
+                    backgroundColor: "transparent",
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: ""
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'white'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Total cost',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Homecare',
+                        y: data.totalHomecare
+                    }, {
+                            name: 'Utilities',
+                            y: data.totalUtilities
+                        }, {
+                            name: 'Wardrobe',
+                            y: data.totalWardrobe
+                        }, {
+                            name: 'Holidays',
+                            y: data.totalHolidays
+                        }, {
+                            name: 'Medical',
+                            y: data.totalMedical
+                        }, {
+                            name: 'Emergency',
+                            y: data.totalEmergency
+                        }, {
+                            name: 'Extra',
+                            y: data.totalExtra
+                        }]
+                }]
+            });
+        });
+    });
+</script>
+
+
+@if (Request.IsAuthenticated)
+{
+    <!--Do whatever you want with the user
+    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id="logoutform"}))
+    {
+        <a href="javascript:document.getElementById('logoutform').submit()">Log Out</a>
+    }-->
+}

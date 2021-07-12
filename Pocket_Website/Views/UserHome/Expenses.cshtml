@@ -1,0 +1,69 @@
+﻿@model List<Pocket_Website.Models.Expenses>
+
+@{
+    ViewBag.Title = "Expenses";
+    var grid = new WebGrid(canPage: true, rowsPerPage: 20);
+    grid.Bind(source: Model);
+}
+
+<script>
+    $(document).ready(function () {
+        $("#ShowDetails").click(function () {
+            $("#DetailList").show();
+            $("#NonDetailList").hide();
+            $("#ShowDetails").hide();
+            $("#HideDetails").show();
+        });
+        $("#HideDetails").click(function () {
+            $("#DetailList").hide();
+            $("#NonDetailList").show();
+            $("#ShowDetails").show();
+            $("#HideDetails").hide();
+        });
+    });
+</script>
+
+<h2 style="text-align:center; margin-top:20px; color:silver">Expenses</h2>
+
+<div style="margin-top:20px;margin-bottom:80px">
+    <button class="btn btn-default pull-right" id="ShowDetails">Show Details</button>
+    <button class="btn btn-default pull-right" id="HideDetails" style="display:none">Hide Details</button>
+</div>
+
+<div style="display:none;" id="DetailList">
+    <div>
+        @grid.Table(
+        tableStyle: "table table-responsive thead-dark table-bordered",
+        headerStyle: "thead-light",
+        columns: grid.Columns(
+            grid.Column(columnName: "ExpensesCategoryName", header: "Category"),
+            grid.Column(columnName: "ExpensesTypeName", header: "Type"),
+            grid.Column(columnName: "ExpensesDate", header: "Date", format: (item) => string.Format("{0:dd-MMM-yyyy}", item.ExpensesDate)),
+            grid.Column(columnName: "TotalExpenses" , header: "Total"),
+            grid.Column(columnName: "PaymentMethod", header: "Payment Method"),
+            grid.Column(columnName: "Notes", header: "Notes")))
+    </div>
+</div>
+<div id="NonDetailList">
+    <div>
+        @grid.Table(
+        tableStyle: "table table-responsive thead-dark table-bordered",
+        headerStyle: "thead-light",
+        columns: grid.Columns(
+            grid.Column(columnName: "ExpensesCategoryName", header: "Category"),
+            grid.Column(columnName: "ExpensesTypeName", header: "Type"),
+            grid.Column(columnName: "ExpensesDate", header: "Date", format: (item) => string.Format("{0:dd-MMM-yyyy}", item.ExpensesDate)),
+            grid.Column(columnName: "TotalExpenses" , header: "Total"),
+            grid.Column(columnName: "", format: (item) => Html.ActionLink("Edit", "EditExpense", "UserHome", new { category = item.ExpensesCategoryName, type = item.ExpensesTypeName, date = item.ExpensesDate }, null)),
+            grid.Column(columnName: "", format: (item) => Html.ActionLink("Delete", "DeleteExpense", "UserHome", new { category = item.ExpensesCategoryName, type = item.ExpensesTypeName, date = item.ExpensesDate },
+            new { onclick = "return confirm('Are you sure you wish to delete this article?');" }))))
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        @grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-small pagination-right")
+    </div>
+    <div class="col-md-6">
+        @Html.ActionLink("New", "AddExpense", "UserHome", new { @class = "btn btn-default pull-right" })
+    </div>
+</div>              

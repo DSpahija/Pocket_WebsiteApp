@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="587360f1394546b19f18c92a5a994c60" Name="Diagram1">
+        <EntityTypeShape EntityType="Pocket_DatabaseModel.Expens" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pocket_DatabaseModel.ExpensesCategory" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pocket_DatabaseModel.ExpensesType" Width="1.5" PointX="6" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pocket_DatabaseModel.Income" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Pocket_DatabaseModel.User" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="Pocket_DatabaseModel.FK__Expenses__Expens__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="Pocket_DatabaseModel.FK__Expenses__Expens__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="Pocket_DatabaseModel.FK__Expenses__IDUser__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="Pocket_DatabaseModel.FK__ExpensesT__TypeC__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="Pocket_DatabaseModel.FK__ExpensesT__IDUse__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="Pocket_DatabaseModel.FK__Income__IDUser__619B8048" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

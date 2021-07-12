@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html><html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <style type="text/css">
+        .loading {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background: url('../../Assets/Second.gif') no-repeat center center;
+            background-size: 180px 180px;
+        }
+    </style>
+</head>
+<body style="background-color:#1a2028">
+    @Html.Hidden("RedirectTo", Url.Action("Index", "Home"));
+    <div class="loading" id="loading">
+
+    </div>
+    <script type="text/javascript">
+        var modal, loading;
+        function ShowProgress() {
+            modal = document.createElement("DIV");
+            modal.className = "modal";
+            document.body.appendChild(modal);
+            loading = document.getElementsByClassName("loading")[0];
+            var top = Math.max(window.innerHeight / 2 - loading.offsetHeight / 2, 0);
+            var left = Math.max(window.innerWidth / 2 - loading.offsetWidth / 2, 0);
+            loading.style.top = top + "px";
+            loading.style.left = left + "px";
+        };
+        ShowProgress();
+    </script>
+
+    <script type="text/javascript">
+
+        $(function stateChange(newState) {
+            setTimeout(function () {
+                location.href = $("#RedirectTo").val();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

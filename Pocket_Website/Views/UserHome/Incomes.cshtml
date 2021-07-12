@@ -1,0 +1,63 @@
+﻿@model List<Pocket_Website.Models.Income>
+
+@{
+    ViewBag.Title = "Expenses";
+    var grid = new WebGrid(canPage: true, rowsPerPage: 20);
+    grid.Bind(source: Model);
+}
+<script>
+    $(document).ready(function () {
+        $("#ShowDetails").click(function () {
+            $("#DetailList").show();
+            $("#NonDetailList").hide();
+            $("#ShowDetails").hide();
+            $("#HideDetails").show();
+        });
+        $("#HideDetails").click(function () {
+            $("#DetailList").hide();
+            $("#NonDetailList").show();
+            $("#ShowDetails").show();
+            $("#HideDetails").hide();
+        });
+    });
+</script>
+
+<h2 style="text-align:center; margin-top:20px; color:silver">Incomes</h2>
+
+<div style="margin-top:20px;margin-bottom:100px">
+    <button class="btn btn-default pull-right" id="ShowDetails">Show Details</button>
+    <button class="btn btn-default pull-right" id="HideDetails" style="display:none">Hide Details</button>
+</div>
+
+
+<div id="DetailList" style="margin-top:40px; display:none;">
+    <div>
+        @grid.Table(
+        tableStyle: "table table-responsive thead-dark table-bordered",
+        headerStyle: "thead-light",
+        columns: grid.Columns(
+        grid.Column(columnName: "PersonName", header: "Name"),
+        grid.Column(columnName: "TotalIncome", header: "Total"),
+        grid.Column(columnName: "SalaryDate", header: "Date", format: (item) => string.Format("{0:dd-MMM-yyyy}", item.SalaryDate))
+        ))
+    </div>
+    </div>
+    <div id="NonDetailList">
+        <div>
+            @grid.Table(
+            tableStyle: "table table-responsive thead-dark table-bordered",
+            headerStyle: "thead-light",
+            columns: grid.Columns(
+                grid.Column(columnName: "PersonName", header: "Name"),
+                grid.Column(columnName: "TotalIncome", header: "Total"),
+                grid.Column(columnName: "", format: (item) => Html.ActionLink("Edit", "EditIncome", "UserHome", new { personName = item.PersonName, totalIncome = item.TotalIncome }, null)),
+                grid.Column(columnName: "", format: (item) => Html.ActionLink("Delete", "DeleteIncome", "UserHome", new { id = item.IDIncome },null))))
+        </div>
+    </div>
+    <!--
+            -->
+    <div class="row">
+        <div class="col-md-6">
+            @grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-small pagination-right")
+        </div>
+</div>

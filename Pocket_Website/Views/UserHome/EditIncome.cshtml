@@ -1,0 +1,13 @@
+﻿@model Pocket_Website.Models.Income
+@{
+    ViewBag.Title = "EditIncome";
+}
+
+<h2>EditIncome</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.EditorForModel("Income")
+    }
+</div>
